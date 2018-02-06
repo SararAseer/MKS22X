@@ -39,7 +39,7 @@ public class Recursion{
 	if (n ==0){
 	    return n;
 	}
-	return sqrt2(n,1);
+	return sqrt2(n,0);
 	
 
     }
@@ -61,5 +61,23 @@ public class Recursion{
 	return n+1;
     }
 
+    public boolean isPossibleSum(int n, int target){
+	e(n);
+	if(n<target){
+	    return sdh(n,target,0);
+	}
+	return true;
 
+    }
+
+    public boolean sdh(int n, int t,int s){
+	if (t==s){
+	    return true;
+	}
+	if (n<0 && t==s){
+	    return true;
+	}
+
+	return  sdh(n-1,t,s+n)||sdh(n-1,t,s);
+    }
 }

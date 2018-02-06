@@ -39,19 +39,20 @@ public class Recursion{
 	if (n ==0){
 	    return n;
 	}
-	return sqrt2(n,0);
+	return sqrt2(n,1,n);
 	
 
     }
 
-    public double sqrt2(double n, double x){
+    public double sqrt2(double n, double x, double g){
 	e(n);
-	double z= ( n / x + x) / 2;
-	if ((((n-(z*z))/n)*100)<=.00001&&(((n-(z*z))/n)*100)>=0){
+	double z= (g+x)/2;
+	if (Math.abs((((n-(z*z))/n)*100))<=.00001){
 	    return x;
 	}
-	x=x+1;
-	return sqrt2(n,x);
+	x=(g+x)/2;
+	g=n/x;
+	return sqrt2(n,x,g);
 	
     }
 	

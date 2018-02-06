@@ -12,11 +12,16 @@ public class Recursion{
 	if (n==1||n==0){
 	    return n;
 	}
-	if (n>0){
-	    return n+fib(n-1)+fib(n-2);
-	}
-	return 0;
+	return fibhelp(n,0,1);
 	
+    }
+
+    public int fibhelp(int n,int n1,int nn){
+	if (n==0){
+	    return n1;
+	}
+	return fibhelp(n-1,nn,n1+nn);
+
     }
 
     public double sqrt(double n){

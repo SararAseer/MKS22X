@@ -1,62 +1,59 @@
 public class QueenBoard{
     private int[][]board;
     private int size;
-
     
     public QueenBoard(int x){
 	board= new int [x][x];
 	size=x;
     }
 
-    private boolean check(){
-	for (int[] x : board){
-	    for(int element:x) {
-		if(element!=0){
-		    return false;
-		}		
-	    }
-	}
-	return true;
-    }
-
-    private void vhd(int r,int c, int x){	
+    public void avhd(int r,int c){
+	
 	for (int i= 0 ; i < size ; i++){
-	    board[r][i]+=x;
-	    board[i][c]+=x;
-	    if(r+i<size&& c+i<size){
-		board[r+i][c+i]+=x;
+	    int x=i;
+	    board[r][i]+=1;
+	    board[i][c]+=1;
+	    if(r+1<size){
+		board[r+i][c+i]+=1;
 	    }
-	    if(r+i<size&& c-i>=0){
-		board[r+i][c-i]+=x;
-	    }
-	    if(r-i>=0&& c+i<size){
-		board[r-i][c+i]+=x;
-	    }
-	    if(r-i>=0&& c-i>=0){
-		board[r-i][c-i]+=x;
+	    if(r-i>-1){
+		board[r-i][c-i]+=1;
 	    }
 	}
 	  
     
     }
     
-   
+    public void rvhd(int r,int c){
+	
+	for (int i= 0 ; i < size ; i++){
+	    int x=i;
+	    board[r][i]-=1;
+	    board[i][c]-=1;
+	    if(r+1<size){
+		board[r+i][c+i]-=1;
+	    }
+	    if(r-i>-1){
+		board[r-i][c-i]-=1;
+	    }
+	}
+	  
+    
+    }
     
     private boolean addQueen(int r, int c){
 	boolean q=false;
-	if (r <size && c <size){
-	    if (board[r][c]==0){
-		vhd(r,c,1);
-		q=true;
-		board[r][c]=-1;
-	    }
+	if (board[r][c]!=-1){
+	    avhd(r,c);
+	    q=true;
+	    board[r][c]=1;
 	}
 	return q;
     }
     private boolean removeQueen(int r, int c){
 	boolean q=false;
 	if (board[r][c]==-1){
-	    vhd(r,c,-1);
+	    rvhd(r,c);
 	    q=true;
 	    board[r][c]=0;
 	}
@@ -83,9 +80,10 @@ public class QueenBoard{
 		else{
 		    s+="_";
 		}
-	    
+		if(i==size-1){
+		    s+="\n";		    
+		}
 	    }
-	    s+="\n";		    
 	}
 	return s;
     }
@@ -96,62 +94,35 @@ public class QueenBoard{
      *@throws IllegalStateException when the board starts with any non-zero value
      */
     public boolean solve(){
-	if(!check()){
-	    throw new IllegalStateException("Board has a number");
-	}
-	if(doit(0)){
+	if(doit(0,0)){
 	    return true;
 	}
 	return false;
     }
 
-    private boolean doit(int c){
-	if (c==size){
-	    return true;
-	}
-
-	for (int i=0; i < size; i++){
-	    if(addQueen(i,c)){
-		if(doit(c+1)){
-		    return true;
-		}
-		removeQueen(i,c);
+    public boolean doit(int r, int c){
+	if (r!=size-1){
+	    if(board[r][c]!=-1){
+	    addQueen(r,c);
 	    }
-	    
+	    else{
+	    }
+		
 	}
-	return false;
+     
+	return r==size-1 || doit(r+1)(c+1);
     }
+  
     /**
      *@return the number of solutions found, and leaves the board filled with only 0's
      *@throws IllegalStateException when the board starts with any non-zero value
      */
     public int countSolutions(){
-	if(!check()){
-	    throw new IllegalStateException("Board has a number");
-	}
-	return csh(0);
-	
+	return size;
     }
-
-    private int csh(int c){
-	int x = 0;
-  	if (c == board.length){
-	    return 1;
-    	}
-
-    	for (int r = 0; r < board.length; r++){
-    	    if (addQueen(r,c)){
-		x += csh(c+1);
-		removeQueen(r,c);	
-    	    }
-    	}
-    	return x;
+  
 
 
-    }
+
+
 }
-
-
-
-
-

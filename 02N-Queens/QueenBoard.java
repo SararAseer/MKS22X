@@ -129,7 +129,13 @@ public class QueenBoard{
 	if(!check()){
 	    throw new IllegalStateException("Board has a number");
 	}
-	return csh(0);
+	int a=csh(0);
+	for (int i =0; i < board.length ; i++){
+	    for (int x= 0 ; x < board[i].length; x++){
+		board[i][x]=0;
+	    }
+	}
+	return a;
 	
     }
 
@@ -145,6 +151,8 @@ public class QueenBoard{
 		removeQueen(r,c);	
     	    }
     	}
+
+	
     	return x;
 
 

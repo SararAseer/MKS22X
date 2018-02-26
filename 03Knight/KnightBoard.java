@@ -24,8 +24,8 @@ public class KnightBoard{
 	board=new int[r][c];
 	size=r*c;
 	pos=new int [][]{
-	    {  2, 1, -1, -2, -2, -1,  1,  2 },
-	    {  1, 2,  2,  1, -1, -2, -2, -1 }
+	    {  -2, 1, -1, -2, 2, -1,  1,  2 },
+	    {  -1, 2,  -2,  1, -1, 2, -2, 1 }
 	};
 	length=r;
 	width=c;

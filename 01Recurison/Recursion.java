@@ -47,7 +47,7 @@ public class Recursion{
     public double sqrt2(double n, double x, double g){
 	e(n);
 	double z= (g+x)/2;
-	if (Math.abs((((n-(z*z))/n)*100))<=.00001){
+	if (Math.abs((((n-(z*z))/n)*100))<=.000001){
 	    return x;
 	}
 	x=(g+x)/2;

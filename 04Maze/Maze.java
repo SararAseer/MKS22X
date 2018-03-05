@@ -68,12 +68,23 @@ public class Maze{
     }
 
 
-    public boolean solve(){
+    public int solve(){
+	int s=0;
 	maze[se[0][0]][se[0][1]]=' ';
-	return solve(se[0][0],se[0][1]);
+	if( solve(se[0][0],se[0][1])){
+	    for (int i=0; i < maze.length; i++){
+		for (int x=0; x < maze[i].length; x++){
+		    if(maze[i][x]=='@'){
+			s+=1;
+		    }
+		}
+	    }
+	    return s;
+	}
+	return 0;
     }
 
-    public String x(){
+    public String toString(){
 	String s="";
 	for (int i=0; i < maze.length; i++){
 	    for (int x=0; x < maze[i].length; x++){
@@ -88,7 +99,7 @@ public class Maze{
     private boolean solve(int r, int c){
         if(animate){
             clearTerminal();
-            System.out.println(x());
+            System.out.println(this);
             wait(30);
         }
 	if (maze[r][c] != ' '){

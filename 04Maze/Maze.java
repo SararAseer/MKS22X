@@ -81,7 +81,7 @@ public class Maze{
 	    }
 	    return s;
 	}
-	return 0;
+	return -1;
     }
 
     public String toString(){

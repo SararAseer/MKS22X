@@ -17,7 +17,6 @@ public class Merge{
 	    System.out.println("Test:"+"\n"+toString(test));
 	    mergesort(test);
 	    System.out.println("Test:"+"\n"+toString(test));
-	    System.out.println("Test:"+"\n"+toString(arr));		   
       }
 
     public static String toString(int[] list){

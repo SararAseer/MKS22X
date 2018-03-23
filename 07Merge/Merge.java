@@ -17,6 +17,7 @@ public class Merge{
 	    System.out.println("Test:"+"\n"+toString(test));
 	    mergesort(test);
 	    System.out.println("Test:"+"\n"+toString(test));
+	   
       }
 
     public static String toString(int[] list){
@@ -31,28 +32,36 @@ public class Merge{
     
     public static void mergesort(int[] data){
 	int [] temp= new int[data.length];
+	for(int i=0; i < data.length;i++){
+	    temp[i]=data[i];
+
+
+	}
 	msort(data,temp, 0, data.length-1);
     }
-    
+
+  
     private static void msort(int [] data, int [] temp, int lo, int hi){
 	if(lo<hi){
-	    for(int i=0; i< data.length;i++){
-		temp[i]=data[i];
-
-	    }
 	    int mid = (hi+lo)/2;
 	    msort(data,temp,lo,mid);
 	    msort(data,temp,mid+1,hi);
 	    merge(data,temp,lo,mid,hi);
+	    for(int i=lo; i<=hi;i++){
+		temp[i]=data[i];
+
+	    }
 	}
 	
     }
 
     
+    
   
     private static void merge(int [] x, int [] y, int lo,int mid, int hi){
 	int pos=lo;
 	int m2=mid+1;
+
 	while(lo<=mid && m2<=hi){
 	    if(y[lo]<=y[m2]){
 		x[pos]=y[lo];
@@ -75,7 +84,6 @@ public class Merge{
             pos++;
         }
     }
-
-    
+   
 
 }

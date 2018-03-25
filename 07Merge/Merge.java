@@ -3,27 +3,40 @@ import java.io.*;
 
 public class Merge{
 
-      public static void main(String[] args){
-	    int[] test = new int[Integer.parseInt(args[0])];
-	    for(int i =0; i < test.length; i++){
-		Random seed= new Random();
-		int num=seed.nextInt((Integer.parseInt(args[1])));
-		if(seed.nextBoolean()){
-		    num*=-1;
-		}
-		test[i]=num;
+    public static void main(String[] args){
+	int[] test = new int[Integer.parseInt(args[0])];
+	for(int i =0; i < test.length; i++){
+	    Random seed= new Random();
+	    int num=seed.nextInt((Integer.parseInt(args[1])));
+	    if(seed.nextBoolean()){
+		num*=-1;
 	    }
+	    test[i]=num;
+	}
 
-	    System.out.println("Test:"+"\n"+toString(test));
-	    mergesort(test);
-	    System.out.println("Test:"+"\n"+toString(test));
+	System.out.println("Test:"+"\n"+toString(test));
+	mergesort(test);
+	System.out.println("Test:"+"\n"+toString(test));
 	   
-      }
+    }
 
+    public static void insertionSort(int[] data, int lo, int hi){
+	for (int i=lo; i<data.length; ++i){
+	    int sub = data[i];
+	    int place = i-1;
+	    while (place>=lo && data[place] > sub&& place<=hi){
+		data[place+1] = data[place];
+		place = place-1;
+	    }
+	    data[place+1] = sub;
+	}
+	
+    }
+    
     public static String toString(int[] list){
 	String s="[";
 	for (int i = 0; i < list.length-1; i++){
-		s+=""+list[i]+",";	    	    
+	    s+=""+list[i]+",";	    	    
 	}
 	
 	s+=""+list[list.length-1]+"]";
@@ -61,7 +74,7 @@ public class Merge{
     private static void merge(int [] x, int [] y, int lo,int mid, int hi){
 	int pos=lo;
 	int m2=mid+1;
-
+	/*
 	while(lo<=mid && m2<=hi){
 	    if(y[lo]<=y[m2]){
 		x[pos]=y[lo];
@@ -83,7 +96,9 @@ public class Merge{
             m2++;
             pos++;
         }
+	*/
+	insertionSort(x,lo,hi);
     }
    
-
+    
 }

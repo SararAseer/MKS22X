@@ -35,6 +35,20 @@ public class Quick{
     
     }
 
+    
+    public static void insertionSort(int[] data, int lo, int hi){
+	for (int i=lo; i<data.length; ++i){
+	    int sub = data[i];
+	    int place = i-1;
+	    while (place>=lo && data[place] > sub&& place<=hi){
+		data[place+1] = data[place];
+		place = place-1;
+	    }
+	    data[place+1] = sub;
+	}
+	
+    }
+
     private static String toString(int[] list){
 	String s="[";
 	for (int i = 0; i < list.length-1; i++){
@@ -85,7 +99,10 @@ public class Quick{
 
     private static void QSH(int ary[], int lo, int hi){
 	int n=(ary.length-1);
-	if(hi>lo){
+	if (hi-lo <= 35){
+	    insertionSort(ary, lo, hi);
+	}
+	else if(hi>lo){
 	    int pos=partition(ary,lo,hi);
 	    QSH(ary,lo,pos-1);
 	    QSH(ary,pos+1,hi);

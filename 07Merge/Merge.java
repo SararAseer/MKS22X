@@ -72,32 +72,35 @@ public class Merge{
     
   
     private static void merge(int [] x, int [] y, int lo,int mid, int hi){
-	int pos=lo;
-	int m2=mid+1;
-	/*
-	while(lo<=mid && m2<=hi){
-	    if(y[lo]<=y[m2]){
-		x[pos]=y[lo];
-		lo++;
-	    }	    
-	    else{
-		x[pos]=y[m2];
-		m2++;
+	if(hi-lo>30){
+	    int pos=lo;
+	    int m2=mid+1;
+
+	    while(lo<=mid && m2<=hi){
+		if(y[lo]<=y[m2]){
+		    x[pos]=y[lo];
+		    lo++;
+		}	    
+		else{
+		    x[pos]=y[m2];
+		    m2++;
+		}
+		pos++;
 	    }
-	    pos++;
+	    while (lo <= mid){
+		x[pos] = y[lo];
+		lo++;
+		pos++;
+	    }
+	    while (m2 <=hi){
+		x[pos] = y[m2];
+		m2++;
+		pos++;
+	    }
 	}
-	while (lo <= mid){
-            x[pos] = y[lo];
-            lo++;
-            pos++;
-        }
-	while (m2 <=hi){
-            x[pos] = y[m2];
-            m2++;
-            pos++;
-        }
-	*/
-	insertionSort(x,lo,hi);
+	else{
+	    insertionSort(x,lo,hi);
+	}
     }
    
     

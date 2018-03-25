@@ -99,7 +99,7 @@ public class Quick{
 
     private static void QSH(int ary[], int lo, int hi){
 	int n=(ary.length-1);
-	if (hi-lo <= 20){
+	if (hi-lo <= 30){
 	    insertionSort(ary, lo, hi);
 	}
 	else if(hi>lo){

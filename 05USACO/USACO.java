@@ -60,7 +60,6 @@ public class USACO{
 		}
 		b+="\n";;
 	    }
-	    System.out.println(b);
 
 		
 	}catch(FileNotFoundException e){

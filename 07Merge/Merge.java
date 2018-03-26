@@ -20,17 +20,19 @@ public class Merge{
 	   
     }
 
-    public static void insertionSort(int[] data, int lo, int hi){
-	for (int i=lo; i<data.length; ++i){
-	    int sub = data[i];
-	    int place = i-1;
-	    while (place>=lo && data[place] > sub&& place<=hi){
-		data[place+1] = data[place];
-		place = place-1;
-	    }
-	    data[place+1] = sub;
+    private static void insertionSort(int[] data,int lo, int hi){
+	if (hi > lo){
+      
+	    insertionSort( data, lo,hi-1 );
+      
+	    int pos1 = data[hi-1];
+	    int pos2 = hi-2;
+      	    while (pos2 >= lo && data[pos2] > pos1){
+		    data[pos2+1] = data[pos2];
+		    pos2--;
+		}
+	    data[pos2+1] = pos1;
 	}
-	
     }
     
     public static String toString(int[] list){

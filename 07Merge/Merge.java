@@ -66,7 +66,7 @@ public class Merge{
 	    msort(data,temp,lo,mid);
 	    msort(data,temp,mid+1,hi);
 	    merge(data,temp,lo,mid,hi);
-	    for(int i=lo; i<hi+1;i++){
+	    for(int i=lo; i<=hi;i++){
 		temp[i]=data[i];
 
 	    }

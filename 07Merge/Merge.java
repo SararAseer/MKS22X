@@ -52,7 +52,7 @@ public class Merge{
 
 
 	}
-	msort(data,temp, 0, data.length-1);
+	msort(data,temp, 0, data.length);
     }
 
   
@@ -66,7 +66,7 @@ public class Merge{
 	    msort(data,temp,lo,mid);
 	    msort(data,temp,mid+1,hi);
 	    merge(data,temp,lo,mid,hi);
-	    for(int i=lo; i<=hi;i++){
+	    for(int i=lo; i<hi+1;i++){
 		temp[i]=data[i];
 
 	    }

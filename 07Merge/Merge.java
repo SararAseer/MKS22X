@@ -57,8 +57,12 @@ public class Merge{
 
   
     private static void msort(int [] data, int [] temp, int lo, int hi){
-	if(lo<hi){
-	    int mid = (hi+lo)/2;
+	if(hi-lo<=35){
+	    insertionSort(data,lo,hi);
+
+	}
+	else{
+	    int mid = hi/2+lo/2;
 	    msort(data,temp,lo,mid);
 	    msort(data,temp,mid+1,hi);
 	    merge(data,temp,lo,mid,hi);
@@ -67,6 +71,7 @@ public class Merge{
 
 	    }
 	}
+    
 	
     }
 
@@ -74,36 +79,33 @@ public class Merge{
     
   
     private static void merge(int [] x, int [] y, int lo,int mid, int hi){
-	if(hi-lo>30){
-	    int pos=lo;
-	    int m2=mid+1;
+	int pos=lo;
+	int m2=mid+1;
 
-	    while(lo<=mid && m2<=hi){
-		if(y[lo]<=y[m2]){
-		    x[pos]=y[lo];
-		    lo++;
-		}	    
-		else{
-		    x[pos]=y[m2];
-		    m2++;
-		}
-		pos++;
-	    }
-	    while (lo <= mid){
-		x[pos] = y[lo];
+	while(lo<=mid && m2<=hi){
+	    if(y[lo]<=y[m2]){
+		x[pos]=y[lo];
 		lo++;
-		pos++;
-	    }
-	    while (m2 <=hi){
-		x[pos] = y[m2];
+	    }	    
+	    else{
+		x[pos]=y[m2];
 		m2++;
-		pos++;
 	    }
+	    pos++;
 	}
-	else{
-	    insertionSort(x,lo,hi);
+	while (lo <= mid){
+	    x[pos] = y[lo];
+	    lo++;
+	    pos++;
+	}
+	while (m2 <=hi){
+	    x[pos] = y[m2];
+	    m2++;
+	    pos++;
 	}
     }
+
+
    
     
 }

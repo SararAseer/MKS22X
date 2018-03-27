@@ -37,14 +37,14 @@ public class Quick{
 
     
     public static void insertionSort(int[] data, int lo, int hi){
-	for (int i=lo; i<data.length; ++i){
+	for (int i=lo+1; i<=hi; ++i){
 	    int sub = data[i];
-	    int place = i-1;
-	    while (place>=lo && data[place] > sub&& place<=hi){
-		data[place+1] = data[place];
+	    int place = i;
+	    while (place>lo && data[place-1] > sub){
+		data[place] = data[place-1];
 		place = place-1;
 	    }
-	    data[place+1] = sub;
+	    data[place] = sub;
 	}
 	
     }
@@ -60,6 +60,9 @@ public class Quick{
     }
    
     public static int partition(int[] x,int lo, int hi){
+	if(x.length<=1){
+	    return lo;
+	}
 	Random seed= new Random();
 	int piv=seed.nextInt((hi-lo));
 	//	System.out.println(toString(x));
@@ -98,7 +101,6 @@ public class Quick{
     }
 
     private static void QSH(int ary[], int lo, int hi){
-	int n=(ary.length-1);
 	if (hi-lo <= 30){
 	    insertionSort(ary, lo, hi);
 	}

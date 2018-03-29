@@ -3,36 +3,77 @@ import java.io.*;
 
 
 public class Quick{
-    
-    public static void main(String[] args){
-	//	try{
-	    int[] test = new int[Integer.parseInt(args[0])];
-	    int[] test2 = new int[Integer.parseInt(args[0])];
-	    for(int i =0; i < test.length; i++){
-		Random seed= new Random();
-		int num=seed.nextInt((Integer.parseInt(args[1])));
-		if(seed.nextBoolean()){
-		    num*=-1;
-		}
-		test[i]=num;
-		test2[i]=num;
+    private static final int INCREASE = 0;
+    private static final int DECREASE = 1;
+    private static final int STANDARD = 2;
+    private static final int SMALL_RANGE = 3;
+    private static final int EMPTY = 4;
 
-	    }
-	    // System.out.println("PivAns:"+partition(test,0,test.length-1));
-	    quicksort(test);
-	    System.out.println("real:"+"\n"+toString(test));
-	    //	    System.out.println("Before:"+"\n"+toString(test));
-	    //	    quicksort(test);
-	    //    System.out.println("After:"+"\n"+toString(test));
-	    	    /*/	}
-	catch(Exception IndexOutOfBounds){
-	    System.out.println("After the file name insert the size of the array and the bounds for the numbers in the array"+"\n"+"EX: FileName 10 200"+"\n"+"Would give an array of size 10 with numbers ranging from -200 to 200");
-	}
-	/*/
-    
+    private static String name(int i){
+	if(i==0)return "Increassing";
+	if(i==1)return "Decreassing";
+	if(i==2)return "Normal Random";
+	if(i==3)return "Random with Few Values";
+	if(i==4)return "size 0 array";
+	return "Error stat array";
+
     }
 
+    private static int create(int min, int max){
+	return min + (int)(Math.random()*(max-min));
+    }
+
+    private static int[]makeArray(int size,int type){
+	int[]ans =new int[size];
+	if(type == STANDARD){
+	    for(int i = 0; i < size; i++){
+		ans[i]= create(-1000000,1000000);
+	    }
+	}
+	if(type == INCREASE){
+	    int current = -5 * size;
+	    for(int i = 0; i < size; i++){
+		ans[i]= create(current,current + 10);
+		current += 10;
+	    }
+	}
+	if(type == DECREASE){
+	    int current = 5 * size;
+	    for(int i = 0; i < size; i++){
+		ans[i]= create(current,current + 10);
+		current -= 10;
+	    }
+	}
+	if(type == SMALL_RANGE){
+	    for(int i = 0; i < size; i++){
+		ans[i]= create(-5,5);
+	    }
+	}
+	if(type == EMPTY){
+	    ans = new int[0];
+	}
+	return ans;
+    }
+
+    public static void main(String[]args){
+	if(args.length < 2)return;
     
+	int size =  Integer.parseInt(args[0]);
+	int type =   Integer.parseInt(args[1]);
+
+	int [] start = makeArray(size,type);
+	int [] result = Arrays.copyOf(start,start.length);
+	Arrays.sort(result);
+    
+	long startTime = System.currentTimeMillis();
+	quicksort(start);
+	long elapsedTime = System.currentTimeMillis() - startTime;
+	if(Arrays.equals(start,result)){
+	    System.out.println("PASS Case "+name(type)+" array, size:"+size+" "+elapsedTime/1000.0+"sec ");
+	}else{
+	    System.out.println("FAIL ! ERROR ! "+name(type)+" array, size:"+size+"  ERROR!");
+	}
+    }
     public static void insertionSort(int[] data, int lo, int hi){
 	for (int i=lo+1; i<=hi; ++i){
 	    int sub = data[i];
@@ -46,7 +87,7 @@ public class Quick{
 	
     }
 
-    private static String toString(int[] list){
+    public static String toString(int[] list){
 	String s="[";
 	for (int i = 0; i < list.length-1; i++){
 		s+=""+list[i]+",";	    	    
@@ -57,22 +98,18 @@ public class Quick{
     }
    
     public static int partition(int[] x,int lo, int hi){
-	if(x.length<=1){
-	    return lo;
-	}
 	Random seed= new Random();
 	int piv=seed.nextInt((hi-lo));
 	//	System.out.println(toString(x));
 	swap(piv+lo,lo,x);
-	int s2=lo;
 	int i=lo+1;
 	int a=x[lo];
 	while(i<=hi){
 	    //   System.out.println(toString(x));
 	    if(x[i]< x[lo]){
-		swap(i,s2,x);
+		swap(i,lo,x);
 		i++;
-		s2++;
+		lo++;
 	    }
 	    else if(x[i]>x [lo]){
 		swap(i,hi,x);
@@ -86,9 +123,11 @@ public class Quick{
 	}
 	//	System.out.println(""+lo+","+hi);
 	//	System.out.println("piv:"+a);
+	if(i!=0){
+	    i=i-1;
+	}
 	
-	
-	return hi;
+	return i;
     }
 
 
@@ -96,48 +135,17 @@ public class Quick{
 	QSH(ary,0,ary.length-1);
     }
 
-    private static void QSH(int ary[], int start, int end){
-	if (end-start <= 30){
-	    insertionSort(ary, start, end);
+    private static void QSH(int ary[], int lo, int hi){
+	int n=(ary.length-1);
+	if (hi-lo<=30){
+	    insertionSort(ary,lo,hi);
 	}
-	else if(end>start){
-	       int i = (int)(Math.random() * ((end-start) + 1) + start);
-	    int pivotal = ary[i];
-	    int small = start;
-	    int big = end;
-	    int x = start + 1;
-
-	    swap(ary, i, start);
-
-	    //System.out.println(pivotal);
-	    //toString(parti);
-
-	    while (x <= big){
-		//toString(parti);
-		//System.out.println("LOL: "  + "small: " + small + " big: " + big + " i: " + i);
-		//toString(parti);
-		//System.out.println(pivotal);
-		if (ary[x] < pivotal){
-		    swap(ary, x, small);
-		    small++;
-		    x++;
-		}
-		else if (ary[x] == pivotal){
-		    //System.out.println(i);
-		    x++;
-		    //toString(parti);
-		    //System.out.println(pivotal);
-		}
-		else{
-		    swap(ary, big, x);
-		    big-=1;
-		}
-	    }
-	    
-	    QSH(ary,start,small-1);
-	    QSH(ary,big+1,end);
-	    
+	else if(hi>lo){
+	    int pos=partition(ary,lo,hi);
+	    QSH(ary,lo,pos-1);
+	    QSH(ary,pos+1,hi);
 	}
+	
     }
 
     private static void bs(int[] data){
@@ -179,11 +187,6 @@ public class Quick{
     }
 
     public static void swap(int a, int b, int list[]){
-        int temp = list[a];
-        list[a] = list[b];
-        list[b] = temp;
-    }
-    public static void swap(int list[], int a, int b){
         int temp = list[a];
         list[a] = list[b];
         list[b] = temp;

@@ -99,8 +99,12 @@ public class Merge{
  
   
     private static void msort(int [] data, int [] temp, int lo, int hi){
-	if(hi-lo<=30){
+	if(hi-lo<=30 && hi>lo){
 	    insertionSort(data,lo,hi);
+	    for(int i=lo; i<=hi;i++){
+		temp[i]=data[i];
+
+	    }
 	}
 	else if(lo<hi){
 	    int mid = (hi+lo)/2;
@@ -115,20 +119,19 @@ public class Merge{
 	
     }
 
-   private static void insertionSort(int[] data,int lo, int hi){
-	if (hi > lo){
-      
-	    insertionSort( data, lo,hi-1 );
-      
-	    int pos1 = data[hi-1];
-	    int pos2 = hi-2;
-      	    while (pos2 >= lo && data[pos2] > pos1){
-		    data[pos2+1] = data[pos2];
-		    pos2--;
-		}
-	    data[pos2+1] = pos1;
+    public static void insertionSort(int[] data, int lo, int hi){
+	for (int i=lo+1; i<=hi; ++i){
+	    int sub = data[i];
+	    int place = i;
+	    while (place>lo && data[place-1] > sub){
+		data[place] = data[place-1];
+		place = place-1;
+	    }
+	    data[place] = sub;
 	}
-   }
+	
+    }
+
 
     
     

@@ -98,9 +98,9 @@ public class Quick{
     }
    
     public static int partition(int[] x,int lo, int hi){
+	
 	Random seed= new Random();
 	int piv=seed.nextInt((hi-lo));
-	//	System.out.println(toString(x));
 	swap(piv+lo,lo,x);
 	int i=lo+1;
 	int a=x[lo];
@@ -127,8 +127,12 @@ public class Quick{
 	    i=i-1;
 	}
 	
-	return i;
+	return lo;
+	
     }
+
+	    
+
 
 
     public static void quicksort(int[]ary){
@@ -141,9 +145,9 @@ public class Quick{
 	    insertionSort(ary,lo,hi);
 	}
 	else if(hi>lo){
-	    int pos=partition(ary,lo,hi);
-	    QSH(ary,lo,pos-1);
-	    QSH(ary,pos+1,hi);
+	    int mid=partition(ary,lo,hi);
+	    QSH(ary,lo,mid-1);
+	    QSH(ary,mid+1,hi);
 	}
 	
     }

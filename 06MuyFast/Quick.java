@@ -19,11 +19,8 @@ public class Quick{
 
 	    }
 	    // System.out.println("PivAns:"+partition(test,0,test.length-1));
-	    System.out.println("real2:"+"\n"+toString(test2));
-	    System.out.println(quickselect(test2,2));
-	    System.out.println("real2:"+"\n"+toString(test2));
-	    quicksort(test2);
-	    System.out.println("real2:"+"\n"+toString(test2));
+	    quicksort(test);
+	    System.out.println("real:"+"\n"+toString(test));
 	    //	    System.out.println("Before:"+"\n"+toString(test));
 	    //	    quicksort(test);
 	    //    System.out.println("After:"+"\n"+toString(test));
@@ -67,14 +64,15 @@ public class Quick{
 	int piv=seed.nextInt((hi-lo));
 	//	System.out.println(toString(x));
 	swap(piv+lo,lo,x);
+	int s2=lo;
 	int i=lo+1;
 	int a=x[lo];
 	while(i<=hi){
 	    //   System.out.println(toString(x));
 	    if(x[i]< x[lo]){
-		swap(i,lo,x);
+		swap(i,s2,x);
 		i++;
-		lo++;
+		s2++;
 	    }
 	    else if(x[i]>x [lo]){
 		swap(i,hi,x);
@@ -88,11 +86,9 @@ public class Quick{
 	}
 	//	System.out.println(""+lo+","+hi);
 	//	System.out.println("piv:"+a);
-	if(i!=0){
-	    i=i-1;
-	}
 	
-	return i;
+	
+	return hi;
     }
 
 
@@ -100,16 +96,48 @@ public class Quick{
 	QSH(ary,0,ary.length-1);
     }
 
-    private static void QSH(int ary[], int lo, int hi){
-	if (hi-lo <= 30){
-	    insertionSort(ary, lo, hi);
+    private static void QSH(int ary[], int start, int end){
+	if (end-start <= 30){
+	    insertionSort(ary, start, end);
 	}
-	else if(hi>lo){
-	    int pos=partition(ary,lo,hi);
-	    QSH(ary,lo,pos-1);
-	    QSH(ary,pos+1,hi);
+	else if(end>start){
+	       int i = (int)(Math.random() * ((end-start) + 1) + start);
+	    int pivotal = ary[i];
+	    int small = start;
+	    int big = end;
+	    int x = start + 1;
+
+	    swap(ary, i, start);
+
+	    //System.out.println(pivotal);
+	    //toString(parti);
+
+	    while (x <= big){
+		//toString(parti);
+		//System.out.println("LOL: "  + "small: " + small + " big: " + big + " i: " + i);
+		//toString(parti);
+		//System.out.println(pivotal);
+		if (ary[x] < pivotal){
+		    swap(ary, x, small);
+		    small++;
+		    x++;
+		}
+		else if (ary[x] == pivotal){
+		    //System.out.println(i);
+		    x++;
+		    //toString(parti);
+		    //System.out.println(pivotal);
+		}
+		else{
+		    swap(ary, big, x);
+		    big-=1;
+		}
+	    }
+	    
+	    QSH(ary,start,small-1);
+	    QSH(ary,big+1,end);
+	    
 	}
-	
     }
 
     private static void bs(int[] data){
@@ -151,6 +179,11 @@ public class Quick{
     }
 
     public static void swap(int a, int b, int list[]){
+        int temp = list[a];
+        list[a] = list[b];
+        list[b] = temp;
+    }
+    public static void swap(int list[], int a, int b){
         int temp = list[a];
         list[a] = list[b];
         list[b] = temp;

@@ -97,26 +97,27 @@ public class Quick{
 	return s;
     }
    
-    public static int partition(int[] x,int lo, int hi){
-	
+    private static int[] partition(int[] x,int lo, int hi){
+	int []values=new int[2];
 	Random seed= new Random();
 	int piv=seed.nextInt((hi-lo));
 	swap(piv+lo,lo,x);
 	int i=lo+1;
+	int s2=lo;
 	int a=x[lo];
 	while(i<=hi){
 	    //   System.out.println(toString(x));
-	    if(x[i]< x[lo]){
-		swap(i,lo,x);
+	    if(x[i]< x[s2]){
+		swap(i,s2,x);
 		i++;
-		lo++;
+		s2++;
 	    }
-	    else if(x[i]>x [lo]){
+	    else if(x[i]>x [s2]){
 		swap(i,hi,x);
 		hi--;
 	    }
 
-	    else if(x[i]==x[lo]){
+	    else if(x[i]==x[s2]){
 		i++;
 	    }
 	      
@@ -126,8 +127,44 @@ public class Quick{
 	if(i!=0){
 	    i=i-1;
 	}
+	values[0]=s2;
+	values[1]=hi;
+	return values;
 	
-	return lo;
+    }
+
+    
+    private static int partitionx(int[] x,int lo, int hi){
+	Random seed= new Random();
+	int piv=seed.nextInt((hi-lo));
+	swap(piv+lo,lo,x);
+	int i=lo+1;
+	int s2=lo;
+	int a=x[lo];
+	while(i<=hi){
+	    //   System.out.println(toString(x));
+	    if(x[i]< x[s2]){
+		swap(i,s2,x);
+		i++;
+		s2++;
+	    }
+	    else if(x[i]>x [s2]){
+		swap(i,hi,x);
+		hi--;
+	    }
+
+	    else if(x[i]==x[s2]){
+		i++;
+	    }
+	      
+	}
+	//	System.out.println(""+lo+","+hi);
+	//	System.out.println("piv:"+a);
+	if(i!=0){
+	    i=i-1;
+	}
+
+	return i;
 	
     }
 
@@ -145,9 +182,9 @@ public class Quick{
 	    insertionSort(ary,lo,hi);
 	}
 	else if(hi>lo){
-	    int mid=partition(ary,lo,hi);
-	    QSH(ary,lo,mid-1);
-	    QSH(ary,mid+1,hi);
+	    int[] mid=partition(ary,lo,hi);
+	    QSH(ary,lo,mid[0]-1);
+	    QSH(ary,mid[1]+1,hi);
 	}
 	
     }
@@ -175,7 +212,7 @@ public class Quick{
     }
 
     private static int QSH(int[]ary, int k, int lo, int hi){
-	int pos = partition(ary, lo, hi);
+	int pos = partitionx(ary, lo, hi);
 	if (pos-1 == k){
 	    return ary[k];
 	}

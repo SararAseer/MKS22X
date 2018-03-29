@@ -66,8 +66,9 @@ public class Quick{
 	Arrays.sort(result);
     
 	long startTime = System.currentTimeMillis();
-	quicksort(start);
+	System.out.println(quickselect(start,7));
 	long elapsedTime = System.currentTimeMillis() - startTime;
+	System.out.println(toString(result));
 	if(Arrays.equals(start,result)){
 	    System.out.println("PASS Case "+name(type)+" array, size:"+size+" "+elapsedTime/1000.0+"sec ");
 	}else{
@@ -135,6 +136,9 @@ public class Quick{
 
     
     private static int partitionx(int[] x,int lo, int hi){
+	if(x.length<=1){
+	    return lo;
+	}
 	Random seed= new Random();
 	int piv=seed.nextInt((hi-lo));
 	swap(piv+lo,lo,x);
@@ -160,11 +164,8 @@ public class Quick{
 	}
 	//	System.out.println(""+lo+","+hi);
 	//	System.out.println("piv:"+a);
-	if(i!=0){
-	    i=i-1;
-	}
 
-	return i;
+	return s2;
 	
     }
 
@@ -213,13 +214,13 @@ public class Quick{
 
     private static int QSH(int[]ary, int k, int lo, int hi){
 	int pos = partitionx(ary, lo, hi);
-	if (pos-1 == k){
+	if (pos == k){
 	    return ary[k];
 	}
-	if (k > pos+1){
+	if (k > pos){
 	    return QSH(ary, k, pos + 1, ary.length -1);
 	}
-	if (k<pos-1){
+	if (k<pos){
 	    return QSH(ary, k, 0, pos - 1);
 	}
 	

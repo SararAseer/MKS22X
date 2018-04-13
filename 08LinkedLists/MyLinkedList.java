@@ -9,7 +9,7 @@ public class MyLinkedList{
 	    throw new IndexOutOfBoundsException();
 	}
 
-	if (index == size){
+	if (index == size-1){
 	    return end;
 	}
 	
@@ -95,10 +95,9 @@ public class MyLinkedList{
 		y.setPrev(x);
 		start=x;
 	    }
-	    else if(index==size-1){
+	    else if(index==size){
 		Node y=end;
 		x.setPrev(y);
-		x.setNext(x);
 		y.setNext(x);
 		end=x;
 
@@ -114,9 +113,8 @@ public class MyLinkedList{
 	    
 	}
 	else{
-	    x.setPrev(x);
-	    x.setNext(x);
-	    start=end=x;
+	    start=x;
+	    end=x;
 	}
 	size++;
     }
@@ -125,8 +123,8 @@ public class MyLinkedList{
     //The remove methods can cause a problem, this is why we shouldn't 
     //use an int as the data, we need objects to distinguish between index and data
     public boolean remove(Integer value){
-	Node x=start;
 	int count=0;
+	Node x=getNode(count);
 	while(!x.getValue().equals(value) && !x.equals(end)){
 	    x=x.getNext();
 	    count++;
@@ -145,7 +143,7 @@ public class MyLinkedList{
 	    start=x.getNext();
 	    x.getNext().setPrev(x.getNext());
 	}
-	else if (index==size){
+	else if (index==size-1){
 	    end=x.getPrev();
 	    x.getPrev().getPrev().setNext(x.getPrev());
 	}

@@ -204,7 +204,22 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     }
     //exceptions! // returns the value of what you removed.
 
-  
+    public void extend(MyLinkedListImproved<T> x){
+	if (x.start != null){
+	    if (start != null){
+		x.start.setPrev(end);
+		end.setNext(x.start);
+	    }
+	    else{
+		start = x.start;
+		
+	    }
+	    end = x.end;	    
+	    size += x.size;
+	    x.clear();
+	}
+    }
+    
     private class Node{
 	private Node next, prev;
 	private T data;
@@ -238,6 +253,42 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	public String toString(){
 	    return "" + getValue();
 	}
+    }
+
+    private class NI implements Iterator<T>{
+	
+	Node x;
+	
+	public NI(Node q){
+	    x = q;
+	}
+
+	public T next(){
+	    if(hasNext()){
+		T a = x.getValue();
+		x = x.getNext();
+		return a;
+	    }
+	    else{
+		System.exit(1);
+	    }
+	    return null;
+	}
+	
+	public boolean hasNext(){
+	    if(x==null){
+		return false;
+	    }
+	    return true;
+	}
+	
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+    }
+
+    public Iterator<T> iterator(){
+	return new NI(start);
     }
 
 }

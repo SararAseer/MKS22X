@@ -3,10 +3,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     private Node start,end;
     private int size;
     
-    public Iterator<T> iterator(){
-	return null;
-    }
-
+   
     //This method will help you write other
     //methods, it is private to protect your list
     private Node getNode(int index){
@@ -203,7 +200,24 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	return s2;
     }
     //exceptions! // returns the value of what you removed.
+    public void rev(){
+	if (start != null){
+	    Node s1 = start;
+	    Node s2;
+	    for(int i = 0; i < size; i++){
+		s2 = s1.getPrev();
+		s1.setPrev(s1.getNext());
+		s1.setNext(s2);
+		s1 = s1.getPrev();
+	    }
 
+	    Node e2 = end;
+	    end = start;
+	    start = e2;
+	}
+	
+    }
+    
     public void extend(MyLinkedListImproved<T> x){
 	if (x.start != null){
 	    if (start != null){
@@ -217,8 +231,10 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	    end = x.end;	    
 	    size += x.size;
 	    x.clear();
-	}
+	}	
     }
+
+    
     
     private class Node{
 	private Node next, prev;
@@ -290,5 +306,6 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     public Iterator<T> iterator(){
 	return new NI(start);
     }
+
 
 }

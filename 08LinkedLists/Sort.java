@@ -21,7 +21,7 @@ public class Sort{
 			place=t;
 		    }
 		    else if(j<0){
-			place = 100;
+			place = 10;
 		    }
 		    else{
 			place = 0;

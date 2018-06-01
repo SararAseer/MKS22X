@@ -28,8 +28,8 @@ class Weapon{
     pushMatrix();
     shot=loadImage("shot.png");
     translate(pos.x,pos.y);
-    rotate(heading-PI/2);
-    image(shot,0,0,25,25); 
+    rotate(heading);
+    image(shot,12.5,-12.5,25,25); 
     popMatrix();
     }
     

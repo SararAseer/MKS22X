@@ -17,7 +17,7 @@ class Enemies{
       ship=loadImage("eship.png");
       translate(pos.x,pos.y);
       rotate(heading);
-      image(ship,-25,-25,50,50); 
+      image(ship,0,0,50,50); 
       popMatrix();
      }
     }

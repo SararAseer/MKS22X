@@ -24,14 +24,31 @@ void setup(){
 }
 
 void draw(){
+  int a=0;
   Random rand = new Random();
-  int a=rand.nextInt(100);
-  if(a==10000){
+  if(fighters.size()>0){
+   a=rand.nextInt(fighters.size())+1;
+  }
+  if(fighters.size()==0){
+    fighters.add(new Enemies());
+  }/*
       final float az=coo.pos.x;
       final float bz=coo.pos.y;
       final float cz=coo.heading;
       space=false;
       ebullets.add(new Weapon(new Vector(az,bz),cz,0));
+  */
+  for(int i=0; i <a;i++){
+      int b=rand.nextInt(fighters.size());
+      int c=rand.nextInt(100);
+      if(c==99){
+      Enemies e=fighters.get(b);
+      final float az=e.pos.x;
+      final float bz=e.pos.y;
+      final float cz=e.heading;
+      space=false;
+      ebullets.add(new Weapon(new Vector(az,bz),cz,0));
+      }
   }
   counter++;
   if(counter>=20){
@@ -69,8 +86,9 @@ void draw(){
      bullets.get(i).Display();
      bullets.get(i).update();
      for(int q=0; q < fighters.size(); q++){
-     if(abs(bullets.get(i).pos.x-fighters.get(q).pos.x)<90 &&abs(bullets.get(i).pos.y-fighters.get(q).pos.y)<90){
+     if(abs(bullets.get(i).pos.x-fighters.get(q).pos.x)<25 &&abs(bullets.get(i).pos.y-fighters.get(q).pos.y)<25 && fighters.get(q).dead==false){
        fighters.get(q).sd(true);
+       fighters.remove(q);
        bullets.remove(i);
      }
      else if(bullets.get(i).bounds==false){
@@ -82,7 +100,7 @@ void draw(){
    for(int i=0; i < ebullets.size(); i++){
      ebullets.get(i).Display();
      ebullets.get(i).update();
-     if(abs(ebullets.get(i).pos.x-ship.pos.x)<90 &&abs(ebullets.get(i).pos.y-ship.pos.y)<90){
+     if(abs(ebullets.get(i).pos.x-ship.pos.x)<25 &&abs(ebullets.get(i).pos.y-ship.pos.y)<25){
        ship.sd(true);
        ebullets.remove(i);
      }

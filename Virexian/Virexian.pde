@@ -16,11 +16,8 @@ void setup(){
     space=true;
     ship= new Ship();
     ship.sd(false);
-    coo= new Enemies();
-    fighters.add(coo);
     bullets = new ArrayList<Weapon>();
     ebullets = new ArrayList<Weapon>();
-    coo.sd(false);
 }
 
 void draw(){
@@ -30,7 +27,11 @@ void draw(){
    a=rand.nextInt(fighters.size())+1;
   }
   if(fighters.size()==0){
-    fighters.add(new Enemies());
+    fighters.add(new Enemies(0));
+    fighters.add(new Enemies(1));
+    fighters.add(new Enemies(2));
+    fighters.add(new Enemies(3));
+
   }/*
       final float az=coo.pos.x;
       final float bz=coo.pos.y;
@@ -38,15 +39,12 @@ void draw(){
       space=false;
       ebullets.add(new Weapon(new Vector(az,bz),cz,0));
   */
-  for(int i=0; i <a;i++){
-      int b=rand.nextInt(fighters.size());
+  for(int i=0; i <fighters.size();i++){
       int c=rand.nextInt(100);
-      if(c==99){
-      Enemies e=fighters.get(b);
-      final float az=e.pos.x;
-      final float bz=e.pos.y;
-      final float cz=e.heading;
-      space=false;
+      if(c>97){
+      final float az=fighters.get(i).pos.x;
+      final float bz=fighters.get(i).pos.y;
+      final float cz= fighters.get(i).heading;
       ebullets.add(new Weapon(new Vector(az,bz),cz,0));
       }
   }
@@ -86,7 +84,7 @@ void draw(){
      bullets.get(i).Display();
      bullets.get(i).update();
      for(int q=0; q < fighters.size(); q++){
-     if(abs(bullets.get(i).pos.x-fighters.get(q).pos.x)<25 &&abs(bullets.get(i).pos.y-fighters.get(q).pos.y)<25 && fighters.get(q).dead==false){
+     if(fighters.size()>0&&abs(bullets.get(i).pos.x-fighters.get(q).pos.x)<25 &&abs(bullets.get(i).pos.y-fighters.get(q).pos.y)<25 && fighters.get(q).dead==false){
        fighters.get(q).sd(true);
        fighters.remove(q);
        bullets.remove(i);
@@ -100,7 +98,7 @@ void draw(){
    for(int i=0; i < ebullets.size(); i++){
      ebullets.get(i).Display();
      ebullets.get(i).update();
-     if(abs(ebullets.get(i).pos.x-ship.pos.x)<25 &&abs(ebullets.get(i).pos.y-ship.pos.y)<25){
+     if(ship.dead!=true&&abs(ebullets.get(i).pos.x-ship.pos.x)<25 &&abs(ebullets.get(i).pos.y-ship.pos.y)<25){
        ship.sd(true);
        ebullets.remove(i);
      }

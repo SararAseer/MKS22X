@@ -1,4 +1,3 @@
-
 class Weapon{
   Vector pos;
   Vector vel;
@@ -6,7 +5,23 @@ class Weapon{
   PImage shot;
   boolean bounds;
   
+  
+  Vector getv(){
+     return pos; 
+    
+  }
+  public  Weapon(Vector x, float y, int u){
+    if(u>=0 || u<0){
+        shot=loadImage("eshot.png");
+    }
+      bounds=true;
+      pos= x;
+      heading =y;
+      vel=new Vector(cos(heading),sin(heading));
+  }
+  
   public  Weapon(Vector x, float y){
+        shot=loadImage("shot.png");
       bounds=true;
       pos= x;
       heading =y;
@@ -26,7 +41,6 @@ class Weapon{
     if(bounds){
     System.out.println(vel.q);
     pushMatrix();
-    shot=loadImage("shot.png");
     translate(pos.x,pos.y);
     rotate(heading);
     image(shot,12.5,-12.5,25,25); 

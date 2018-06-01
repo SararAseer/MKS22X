@@ -1,17 +1,38 @@
 Ship ship;
+Enemies coo;
 ArrayList<Enemies> fighters;
 ArrayList<Weapon> bullets;
+ArrayList<Weapon> ebullets;
+
 boolean space;
 int counter;
+
+
 void setup(){
+  
     size(600, 600); 
+    fighters = new ArrayList<Enemies>();  
     counter=0;
     space=true;
     ship= new Ship();
+    ship.sd(false);
+    coo= new Enemies();
+    fighters.add(coo);
     bullets = new ArrayList<Weapon>();
+    ebullets = new ArrayList<Weapon>();
+    coo.sd(false);
 }
 
 void draw(){
+  Random rand = new Random();
+  int a=rand.nextInt(100);
+  if(a==10000){
+      final float az=coo.pos.x;
+      final float bz=coo.pos.y;
+      final float cz=coo.heading;
+      space=false;
+      ebullets.add(new Weapon(new Vector(az,bz),cz,0));
+  }
   counter++;
   if(counter>=20){
     counter=0;
@@ -31,7 +52,7 @@ void draw(){
     else if(keyPressed &&keyCode==LEFT){
       ship.move('d');
     }
-    else if(keyPressed && key==' '&& space && bullets.size()<10 ){
+    else if(!ship.dead && keyPressed && key==' '&& space && bullets.size()<10 ){
       final float xz=ship.pos.x;
       final float yz=ship.pos.y;
       final float hz=ship.heading;
@@ -47,11 +68,33 @@ void draw(){
    for(int i=0; i < bullets.size(); i++){
      bullets.get(i).Display();
      bullets.get(i).update();
-     if(bullets.get(i).bounds==false){
+     for(int q=0; q < fighters.size(); q++){
+     if(abs(bullets.get(i).pos.x-fighters.get(q).pos.x)<90 &&abs(bullets.get(i).pos.y-fighters.get(q).pos.y)<90){
+       fighters.get(q).sd(true);
        bullets.remove(i);
      }
+     else if(bullets.get(i).bounds==false){
+       bullets.remove(i);
+     }
+     
+     }
    }
-   
+   for(int i=0; i < ebullets.size(); i++){
+     ebullets.get(i).Display();
+     ebullets.get(i).update();
+     if(abs(ebullets.get(i).pos.x-ship.pos.x)<90 &&abs(ebullets.get(i).pos.y-ship.pos.y)<90){
+       ship.sd(true);
+       ebullets.remove(i);
+     }
+     else if(ebullets.get(i).bounds==false){
+       ebullets.remove(i);
+     }
+   }
+   for(int i=0; i < fighters.size(); i++){
+     fighters.get(i).move();
+     fighters.get(i).update();
+     fighters.get(i).Display();
+   }
   
 }
 
@@ -62,14 +105,20 @@ class Ship{
   Vector vel= new Vector(0,0);
   float heading=0;
   PImage ship;
+  boolean dead;
   
+  void sd(boolean a){
+     dead=a; 
+  }
    void Display(){
+     if(!dead){
      pushMatrix();
       ship=loadImage("ship.png");
       translate(pos.x,pos.y);
       rotate(heading);
       image(ship,-25,-25,50,50); 
       popMatrix();
+     }
     }
     
     void update(){

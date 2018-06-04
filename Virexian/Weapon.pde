@@ -15,13 +15,13 @@ class Weapon{
         shot=loadImage("eshot.png");
     }
       bounds=true;
-      pos= x;
+      pos= new Vector(x.x+12.5, x.y+12.5);
       heading =y;
-      vel=new Vector(cos(heading),sin(heading));
+      vel=new Vector(-cos(heading),-sin(heading));
   }
   
   public  Weapon(Vector x, float y){
-        shot=loadImage("shot.png");
+      shot=loadImage("shot.png");
       bounds=true;
       pos= x;
       heading =y;

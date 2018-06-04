@@ -41,7 +41,8 @@ void draw(){
   */
   for(int i=0; i <fighters.size();i++){
       int c=rand.nextInt(100);
-      if(c>97){
+      int g=rand.nextInt(100);
+      if(c>95 && g>95){
       final float az=fighters.get(i).pos.x;
       final float bz=fighters.get(i).pos.y;
       final float cz= fighters.get(i).heading;
@@ -84,12 +85,12 @@ void draw(){
      bullets.get(i).Display();
      bullets.get(i).update();
      for(int q=0; q < fighters.size(); q++){
-     if(fighters.size()>0&&abs(bullets.get(i).pos.x-fighters.get(q).pos.x)<25 &&abs(bullets.get(i).pos.y-fighters.get(q).pos.y)<25 && fighters.get(q).dead==false){
+     if(i!=bullets.size()&&abs(bullets.get(i).pos.x-fighters.get(q).pos.x)<25 &&abs(bullets.get(i).pos.y-fighters.get(q).pos.y)<25 && fighters.get(q).dead==false){
        fighters.get(q).sd(true);
        fighters.remove(q);
        bullets.remove(i);
      }
-     else if(bullets.get(i).bounds==false){
+     else if(bullets.size()!=i && bullets.get(i).bounds==false){
        bullets.remove(i);
      }
      
@@ -123,6 +124,10 @@ class Ship{
   PImage ship;
   boolean dead;
   
+  
+  float h(){
+    return heading;
+  }
   void sd(boolean a){
      dead=a; 
   }

@@ -4,7 +4,7 @@ class Enemies{
   Vector pos= new Vector(width/2, height/2);
   Vector vel= new Vector(0,0);
   float heading=0;
-  PImage ship;
+  PImage hip;
   boolean dead;
   int b,c;
   void sd(boolean a){
@@ -14,10 +14,10 @@ class Enemies{
    void Display(){
      if(!dead){
       pushMatrix();
-      ship=loadImage("eship.png");
+      hip=loadImage("eship.png");
       translate(pos.x,pos.y);
       rotate(heading);
-      image(ship,0,0,50,50); 
+      image(hip,25,-25,50,50); 
       popMatrix();
      }
     }
@@ -43,10 +43,10 @@ class Enemies{
      
      if(!dead){
       pushMatrix();
-      ship=loadImage("eship.png");
+      hip=loadImage("eship.png");
       translate(pos.x,pos.y);
       rotate(heading);
-      image(ship,0,0,50,50); 
+      image(hip,0,0,50,50); 
       popMatrix();
      }
     }
@@ -61,24 +61,26 @@ class Enemies{
         Random rand = new Random();
         int a=rand.nextInt(100);
         boolean c=rand.nextBoolean();
-        if(c){
-         heading+=.05; 
+        if(heading+.05<atan2(pos.y-ship.pos.y,pos.x-ship.pos.x)){
+        heading+=.05;
         }
         else{
-          heading-=.05;
+        heading-=.05;
         }
-        if(a>75){
-          vel=new Vector(0,-1);
-        }
-        else if(a>50){
-          vel=new Vector(-1,0);
-        }
-        else if( a>25){
-          vel=new Vector(1,0);
-        }
-        else{
-          vel=new Vector(0,1);
-        }
+         if(dist(pos.x+.1,pos.y,ship.pos.x,ship.pos.y)<dist(pos.x-.1,pos.y,ship.pos.x,ship.pos.y)){
+           vel.x=.25;
+         }
+         else{
+           vel.x=-.25;
+         }
+         if(dist(pos.x,pos.y+.1,ship.pos.x,ship.pos.y)<dist(pos.x,pos.y-.1,ship.pos.x,ship.pos.y)){
+           vel.y=.25;
+         }
+         else{
+           vel.y=-.25;
+         }
+          
+        
     }
   
   

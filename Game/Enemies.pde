@@ -1,6 +1,7 @@
 import java.util.Random;
-
 class Enemies{
+  float totx1,toty1;
+
   Vector pos= new Vector(width/2, height/2);
   Vector vel= new Vector(0,0);
   float heading=0;
@@ -15,7 +16,7 @@ class Enemies{
      if(!dead){
       pushMatrix();
       hip=loadImage("eship.png");
-      translate(pos.x,pos.y);
+      translate(totx1*2,toty1*2);
       rotate(heading);
       image(hip,25,-25,50,50); 
       popMatrix();
@@ -23,37 +24,33 @@ class Enemies{
     }
      public Enemies(int a){
      if(a==0){
-      pos.x=220;
-      pos.y=330;
+      totx1=110;
+      toty1=100;
       
      }
      else if(a==1){
-       pos.x=100;
-       pos.y=200;
+       
+       totx1=50;
+      toty1=100;
      }
      else if(a==2){
-       pos.x=100;
-       pos.y=100;
+      
+       totx1=50;
+      toty1=50;
      }
      else if(a==3){
-       pos.x=400;
-       pos.y=400;
+      
+       totx1=200;
+      toty1=200;
      }
      
      
-     if(!dead){
-      pushMatrix();
-      hip=loadImage("eship.png");
-      translate(pos.x,pos.y);
-      rotate(heading);
-      image(hip,0,0,50,50); 
-      popMatrix();
-     }
+    
     }
     
     void update(){
         pushMatrix();
-        pos.add(vel);
+        
         popMatrix();
     }
     
@@ -61,23 +58,23 @@ class Enemies{
         Random rand = new Random();
         int a=rand.nextInt(100);
         boolean c=rand.nextBoolean();
-        if(heading+.05<atan2(pos.y-ship.pos.y,pos.x-ship.pos.x)){
+        if(heading+.05<atan2((toty1-toty)*2,(totx1-totx)*2)){
         heading+=.05;
         }
         else{
         heading-=.05;
         }
-         if(dist(pos.x+.1,pos.y,ship.pos.x,ship.pos.y)<dist(pos.x-.1,pos.y,ship.pos.x,ship.pos.y)){
-           vel.x=.25;
+         if(totx1<totx){
+           totx1+=.25;
          }
          else{
-           vel.x=-.25;
+           totx1-=.25;
          }
-         if(dist(pos.x,pos.y+.1,ship.pos.x,ship.pos.y)<dist(pos.x,pos.y-.1,ship.pos.x,ship.pos.y)){
-           vel.y=.25;
+         if((toty1>toty)){
+           toty1-=.25;
          }
          else{
-           vel.y=-.25;
+           toty1+=.25;
          }
           
         
